@@ -119,6 +119,9 @@ Commander sur WhatsApp
 </body>
 
 </html>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
 *{
 margin:0;
 padding:0;
@@ -129,76 +132,75 @@ font-family:'Poppins',sans-serif;
 body{
 background:#000;
 color:#fff;
+line-height:1.6;
 }
 
 header{
 text-align:center;
-padding:60px 20px;
+padding:60px 20px 40px;
 }
 
 header h1{
-font-size:60px;
+font-size:65px;
+font-weight:800;
 letter-spacing:12px;
-font-weight:700;
+color:#fff;
 }
 
 .tagline{
-margin-top:12px;
-color:#bdbdbd;
+margin-top:10px;
 font-size:18px;
-letter-spacing:3px;
+color:#aaa;
+letter-spacing:4px;
 }
 
 .gallery{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-gap:20px;
-padding:30px;
 max-width:1200px;
 margin:auto;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+gap:25px;
+padding:20px;
 }
 
 .gallery img{
 width:100%;
-border-radius:18px;
-transition:.4s;
-cursor:pointer;
-box-shadow:0 0 25px rgba(255,255,255,.08);
+border-radius:20px;
+display:block;
+box-shadow:0 10px 35px rgba(255,255,255,.08);
+transition:.35s;
 }
 
 .gallery img:hover{
 transform:scale(1.03);
-box-shadow:0 0 35px rgba(255,255,255,.18);
 }
 
 .product{
-max-width:650px;
+max-width:700px;
 margin:50px auto;
-padding:35px;
 background:#111;
+padding:35px;
 border-radius:20px;
-box-shadow:0 0 30px rgba(255,255,255,.05);
+box-shadow:0 0 30px rgba(255,255,255,.06);
 }
 
 .product h2{
 text-align:center;
+margin-bottom:20px;
 font-size:34px;
-margin-bottom:15px;
 }
 
 .price{
 text-align:center;
-font-size:40px;
+font-size:45px;
 font-weight:700;
-color:#fff;
-margin-bottom:15px;
+margin-bottom:10px;
 }
 
 .delivery{
 text-align:center;
-color:#cfcfcf;
-margin-bottom:35px;
-line-height:28px;
+color:#bdbdbd;
+margin-bottom:30px;
 }
 
 form{
@@ -209,25 +211,27 @@ gap:18px;
 
 input,
 select{
+width:100%;
 padding:16px;
-border:none;
+background:#1b1b1b;
+border:1px solid #333;
 border-radius:12px;
-background:#1d1d1d;
 color:#fff;
 font-size:16px;
-outline:none;
 transition:.3s;
 }
 
 input:focus,
 select:focus{
-background:#2a2a2a;
+border-color:#25D366;
+outline:none;
 }
 
-h3{
+#total{
+margin-top:10px;
 text-align:center;
-font-size:28px;
-margin-top:15px;
+font-size:30px;
+font-weight:bold;
 }
 
 button{
@@ -236,23 +240,23 @@ padding:18px;
 border:none;
 border-radius:14px;
 background:#25D366;
-color:white;
+color:#fff;
 font-size:20px;
-font-weight:bold;
+font-weight:700;
 cursor:pointer;
 transition:.3s;
 }
 
 button:hover{
+background:#1ebd5b;
 transform:translateY(-3px);
-background:#1ebe5d;
 }
 
 footer{
-margin-top:70px;
-padding:30px;
+margin-top:60px;
+padding:25px;
 text-align:center;
-color:#888;
+color:#777;
 border-top:1px solid #222;
 }
 
@@ -260,7 +264,11 @@ border-top:1px solid #222;
 
 header h1{
 font-size:42px;
-letter-spacing:8px;
+letter-spacing:6px;
+}
+
+.tagline{
+font-size:15px;
 }
 
 .product{
@@ -269,7 +277,12 @@ padding:25px;
 }
 
 .price{
-font-size:34px;
+font-size:36px;
+}
+
+.gallery{
+grid-template-columns:1fr;
+padding:15px;
 }
 
 button{
@@ -277,59 +290,54 @@ font-size:18px;
 }
 
 }
+</style>
+<script>
 const tshirtPrice = 170;
 
 const quantityInput = document.getElementById("quantity");
 const total = document.getElementById("total");
 
 function updateTotal() {
+    let quantity = parseInt(quantityInput.value) || 1;
 
-let quantity = parseInt(quantityInput.value);
+    if (quantity < 1) {
+        quantity = 1;
+        quantityInput.value = 1;
+    }
 
-if(quantity < 1){
-
-quantity = 1;
-
-quantityInput.value = 1;
-
-}
-
-total.innerHTML = `Total : ${quantity * tshirtPrice} DH`;
-
+    total.innerHTML = "Total : " + (quantity * tshirtPrice) + " DH";
 }
 
 quantityInput.addEventListener("input", updateTotal);
 
 updateTotal();
 
-function sendOrder(){
+function sendOrder() {
 
-const firstname = document.getElementById("firstname").value.trim();
+    const firstname = document.getElementById("firstname").value;
+    const lastname = document.getElementById("lastname").value;
+    const address = document.getElementById("address").value;
+    const phone = document.getElementById("phone").value;
+    const color = document.getElementById("color").value;
+    const size = document.getElementById("size").value;
+    const quantity = document.getElementById("quantity").value;
 
-const lastname = document.getElementById("lastname").value.trim();
+    if (
+        firstname === "" ||
+        lastname === "" ||
+        address === "" ||
+        phone === ""
+    ) {
+        alert("Veuillez remplir tous les champs.");
+        return;
+    }
 
-const address = document.getElementById("address").value.trim();
+    const totalPrice = tshirtPrice * quantity;
 
-const phone = document.getElementById("phone").value.trim();
+    const message =
+`🖤 NOXEN
 
-const color = document.getElementById("color").value;
-
-const size = document.getElementById("size").value;
-
-const quantity = document.getElementById("quantity").value;
-
-if(
-firstname==="" ||
-lastname==="" ||
-address==="" ||
-phone===""){
-alert("Veuillez remplir tous les champs.");
-return;
-}
-
-const totalPrice = quantity * tshirtPrice;
-
-const message = `🛒 *NEW ORDER - NOXEN*
+🛒 Nouvelle Commande
 
 👤 Prénom : ${firstname}
 
@@ -341,25 +349,23 @@ ${address}
 📞 Téléphone :
 ${phone}
 
-👕
+👕 Couleur : ${color}
 
-Couleur : ${color}
-
-Taille : ${size}
+📏 Taille : ${size}
 
 📦 Quantité : ${quantity}
 
-💰 Prix du T-shirt : 170 DH
+💰 Prix : 170 DH
 
 💵 Total : ${totalPrice} DH
 
 🚚 Livraison partout au Maroc
-(Frais de livraison à la charge du client)
+(Frais de livraison à la charge du client)`;
 
-Merci ❤️`;
+    const whatsapp =
+"https://wa.me/212663769429?text=" + encodeURIComponent(message);
 
-const whatsapp = `https://wa.me/212663769429?text=${encodeURIComponent(message)}`;
-
-window.location.href = whatsapp;
+    window.location.href = whatsapp;
 
 }
+</script>
